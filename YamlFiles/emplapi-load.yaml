@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: emplapi-load
 spec:
-  replicas: 10
+  replicas: 15
   selector:
     matchLabels:
       app: load-generator
