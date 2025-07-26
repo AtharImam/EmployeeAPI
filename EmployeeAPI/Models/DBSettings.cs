@@ -29,5 +29,10 @@
         /// Gets or sets the password for database authentication.
         /// </summary>
         public string Password { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the pool size for database connection.
+        /// </summary>
+        public string PoolSize { get; set; } = string.Empty;
     }
 }
