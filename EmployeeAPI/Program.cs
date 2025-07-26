@@ -27,7 +27,7 @@ if (builder.Environment.IsProduction())
         conStr = conStr?.Replace(settings.Database, Environment.GetEnvironmentVariable(settings.Database));
         conStr = conStr?.Replace(settings.User, Environment.GetEnvironmentVariable(settings.User));
         conStr = conStr?.Replace(settings.Password, Environment.GetEnvironmentVariable(settings.Password));
-        conStr = conStr?.Replace(settings.Password, Environment.GetEnvironmentVariable(settings.Password));
+        conStr = conStr?.Replace(settings.PoolSize, Environment.GetEnvironmentVariable(settings.PoolSize));
         options.UseMySql(conStr, ServerVersion.AutoDetect(conStr));
     });
 }

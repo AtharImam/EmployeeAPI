@@ -11,7 +11,7 @@
         "DB_Name": "EmployeeDb",
         "DB_User": "nagp",
         "DB_Pass": "Asmt#5421",
-        "PoolSize": "100"
+        "DB_PoolSize": "100"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5211"
