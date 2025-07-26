@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emplapi-load
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: load-generator
+  template:
+    metadata:
+      labels:
+        app: load-generator
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            while true; do \
+              wget -q -O- http://emplapi-svc/api/employee/; \
+            done

@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: empldb-hl
+spec:
+  clusterIP: None
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      name: mysql
+      targetPort: 3306
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: empldb-ssets
+spec:
+  serviceName: empldb-hl
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+              name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: empldb-secret
+                  key: DB_RootPass
+
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: empldb-secret
+                  key: DB_User
+
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: empldb-secret
+                  key: DB_Pass
+                  
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: empldb-config
+                  key: DB_Name
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+              readOnly: false
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: empldb-pvc
