@@ -39,8 +39,6 @@ else
     builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(conStr, ServerVersion.AutoDetect(conStr)));
 }
 
-builder.WebHost.ConfigureKestrel(options => { options.ListenAnyIP(80); });
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
