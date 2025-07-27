@@ -94,7 +94,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /api/employee
+          - path: /api
             pathType: Prefix
             backend:
               service:
