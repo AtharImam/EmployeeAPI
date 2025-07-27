@@ -7,6 +7,12 @@ Steps to Test:
 # Check API is connection with DB
 5. Check Public Url for Ingress is working
 6. login into db and show existing records
+kubectl exec -it empldb-ssets-0 -- mysql -h empldb-ssets-0.empldb-hl -u root -p
+SHOW Datbases
+Use <DB>
+SHOW Tables 
+Use <Table>
+Select * From <Table>
 7. apply Post API and show new entry is created
 8. Show new record in DB
 
@@ -14,12 +20,6 @@ Steps to Test:
 9. Delete db pod
 10. Check DB Pod is regenerated
 11. Login into Db and show all records(including created in Step 7)
-kubectl exec -it empldb-ssets-0 -- mysql -h empldb-ssets-0.empldb-hl -u root -p
-SHOW Datbases
-Use <DB>
-SHOW Tables 
-Use <Table>
-Select * From <Table>
 12. Delete DB StatefulSets
 13. Check DB Pod is regenerated
 14. Login into Db and show all records(including created in Step 7)
@@ -33,8 +33,9 @@ Select * From <Table>
 # Test AutoScale and Connection Count
 22. Apply HPA (Kubectl apply -f emplapi-hpa.yaml)
 19. Watch Deployment Pods (kubectl get pods -l app=employeeapi --watch)
-20. Apply load generator (kubectl apply -f emplapi-load.yaml)
+20. Apply load generator (docker run --rm williamyeh/hey -n 2000 -c 200 http://35.201.101.217/api/employee)
 21. Check new pod is created
-22. Open 2nd Console AND Login into Db
-23. Run Query: SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = 'program_name' GROUP BY ATTR_VALUE;
-24. Check connection count per pod
+22. Apply load generator (docker run --rm williamyeh/hey -n 2000 -c 200 http://35.201.101.217/api/pool/test)
+23. Open 2nd Console AND Login into Db
+24. Run Query: SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = 'program_name' GROUP BY ATTR_VALUE;
+25. Check connection count per pod
