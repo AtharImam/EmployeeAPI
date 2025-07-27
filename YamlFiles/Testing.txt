@@ -1,0 +1,6 @@
+# Show all components
+# Check API is connection with DB
+# Test Pod Deletion
+# Test Db Deletion and Data Persistence
+# Test Rolling Update
+# Test AutoScale and Connection Count
