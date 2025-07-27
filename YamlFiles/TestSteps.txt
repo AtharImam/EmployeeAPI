@@ -38,4 +38,4 @@ Select * From <Table>
 22. Apply load generator (docker run --rm williamyeh/hey -n 2000 -c 200 http://35.201.101.217/api/pool/test)
 23. Open 2nd Console AND Login into Db
 24. Run Query: SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = 'program_name' GROUP BY ATTR_VALUE;
-25. Check connection count per pod
+25. Check connection count per pod(Currently 25)
