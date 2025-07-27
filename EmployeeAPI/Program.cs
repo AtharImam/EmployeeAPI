@@ -27,7 +27,9 @@ if (builder.Environment.IsProduction())
         conStr = conStr?.Replace(settings.Database, Environment.GetEnvironmentVariable(settings.Database));
         conStr = conStr?.Replace(settings.User, Environment.GetEnvironmentVariable(settings.User));
         conStr = conStr?.Replace(settings.Password, Environment.GetEnvironmentVariable(settings.Password));
-        conStr = conStr?.Replace(settings.Password, Environment.GetEnvironmentVariable(settings.Password));
+        conStr = conStr?.Replace(settings.PoolSize, Environment.GetEnvironmentVariable(settings.PoolSize));
+        var podName = Environment.GetEnvironmentVariable("POD_Name") ?? "unknown-pod";
+        conStr = conStr?.Replace("POD_Name", Environment.GetEnvironmentVariable("POD_Name"));
         options.UseMySql(conStr, ServerVersion.AutoDetect(conStr));
     });
 }

@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emplapi-depl
+  labels:
+    app: employeeapi
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: employeeapi
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: employeeapi
+    spec:
+      containers:
+        - name: employeeapi
+          image: atharimam/employeeapi:latest
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "100m"
+            limits:
+              cpu: "250m"
+          env:
+            - name: POD_Name
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: ASPNETCORE_URLS
+              value: "http://+:8080"
+            - name: Environment
+              value: Production
+            - name: DB_Host
+              valueFrom:
+                configMapKeyRef:
+                  name: empldb-config
+                  key: DB_Host
+            - name: DB_Port
+              valueFrom:
+                configMapKeyRef:
+                  name: empldb-config
+                  key: DB_Port
+            - name: DB_Name
+              valueFrom:
+                configMapKeyRef:
+                  name: empldb-config
+                  key: DB_Name
+            - name: DB_PoolSize
+              valueFrom:
+                configMapKeyRef:
+                  name: empldb-config
+                  key: DB_PoolSize
+            - name: DB_User
+              valueFrom:
+                secretKeyRef:
+                  name: empldb-secret
+                  key: DB_User
+            - name: DB_Pass
+              valueFrom:
+                secretKeyRef:
+                  name: empldb-secret
+                  key: DB_Pass
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: emplapi-svc
+spec:
+  selector:
+    app: employeeapi
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: emplapi-ing
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: emplapi-svc
+                port:
+                  number: 80
