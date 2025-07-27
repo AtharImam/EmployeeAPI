@@ -1,8 +1,9 @@
 Steps to Test:
-1. Kubectl apply -f empldb-secret-config.yaml
-2. Kubectl apply -f empldb-pv-pvc.yaml
-3. Kubectl apply -f empldb-hl-ssets.yaml
-4. Kubectl apply -f emplapi-depl-ing.yaml
+1. kubectl apply -f empldb-secret-config.yaml
+2. kubectl apply -f empldb-pv-pvc.yaml
+3. kubectl apply -f empldb-hl-ssets.yaml
+4. kubectl apply -f emplapi-depl-ing.yaml
+5. kubectl apply -f emplapi-hpa.yaml
 
 # Check API is connection with DB
 5. Check Public Url for Ingress is working
@@ -24,6 +25,9 @@ Select * From <Table>
 13. Check DB Pod is regenerated
 14. Login into Db and show all records(including created in Step 7)
 
+# Test Pod Deletion
+  Delete one deployment pod and check pod is regenerating
+
 # Test Rolling Update
 15. Watch deployment pods (kubectl get pods -l app=employeeapi --watch)
 16. Open New Console and Apply Deployment with wrong image (Kubectl apply -f emplapi-depl-test)
@@ -33,9 +37,8 @@ Select * From <Table>
 # Test AutoScale and Connection Count
 22. Apply HPA (Kubectl apply -f emplapi-hpa.yaml)
 19. Watch Deployment Pods (kubectl get pods -l app=employeeapi --watch)
-20. Apply load generator (docker run --rm williamyeh/hey -n 2000 -c 200 http://35.201.101.217/api/employee)
+20. Apply load generator (docker run --rm williamyeh/hey -n 4000 -c 200 http://35.201.101.217/api/employee)
 21. Check new pod is created
-22. Apply load generator (docker run --rm williamyeh/hey -n 2000 -c 200 http://35.201.101.217/api/pool/test)
-23. Open 2nd Console AND Login into Db
-24. Run Query: SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = 'program_name' GROUP BY ATTR_VALUE;
-25. Check connection count per pod(Currently 25)
+22. Open 2nd Console AND Login into Db
+23. Run Query: SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = 'program_name' GROUP BY ATTR_VALUE;
+24. Check connection count per pod(Currently 25)

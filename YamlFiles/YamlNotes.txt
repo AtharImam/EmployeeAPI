@@ -5,5 +5,4 @@ Yaml Files:
 4. emplapi-depl-ing: API Deployment + API ClusterIP + Ingress
 5. emplapi-hpa: Horizontal Pod Autoscaler for API
 6. emplapi-depl-test: Test Deployment For Rolling Update Strategy with Wrong Image
-7. emplapi-load: Test Deployment for Autoscaler
 
