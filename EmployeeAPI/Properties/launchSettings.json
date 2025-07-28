@@ -11,7 +11,7 @@
         "DB_Name": "EmployeeDb",
         "DB_User": "nagp",
         "DB_Pass": "Asmt#5421",
-        "DB_PoolSize": "25",
+        "DB_Pool": "25",
         "POD_Name": "Local_Pod"
       },
       "dotnetRunMessages": true,
