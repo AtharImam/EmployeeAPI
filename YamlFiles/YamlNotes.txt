@@ -4,5 +4,4 @@ Yaml Files:
 3. empldb-hl-ssets: DB Headless Service + DB Statefulsets
 4. emplapi-depl-ing: API Deployment + API ClusterIP + Ingress
 5. emplapi-hpa: Horizontal Pod Autoscaler for API
-6. emplapi-depl-test: Test Deployment For Rolling Update Strategy with Wrong Image
 
