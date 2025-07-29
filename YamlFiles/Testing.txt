@@ -1,9 +1,10 @@
 # Show all components
-# Test Pod Deletion
+# Test API Pod Deletion and Pod is regnerated
 # Test Rolling Update by setting wrong image
 # Test Rollout i.e. Deployment goes to old state after crash
 # Test API is connection with DB
 # Test API is real updating DB
+# Test DB Pod Deletion and Pod is regnerated
 # Test Data Persistence after db pod is deleted
 # Test Data Persistence after db StatefulSets is deleted
 # Test Auto Scale 
