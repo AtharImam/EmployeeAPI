@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: employeeapi
-          image: atharimam/employeeapi:latest
+          image: atharimam/employeeapi
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

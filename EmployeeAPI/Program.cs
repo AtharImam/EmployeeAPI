@@ -19,7 +19,8 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<DBSettings>>(
 
 if (builder.Environment.IsProduction())
 {
-    builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
+    var ctxtPoolSize = int.TryParse(builder.Configuration["ContextPoolSize"], out int tempCtxtPoolSize) ? tempCtxtPoolSize : 15;
+    builder.Services.AddDbContextPool<AppDbContext>(poolSize: ctxtPoolSize, optionsAction: (serviceProvider, options) =>
     {
         var settings = serviceProvider.GetRequiredService<DBSettings>();
         conStr = conStr?.Replace(settings.Server, Environment.GetEnvironmentVariable(settings.Server));

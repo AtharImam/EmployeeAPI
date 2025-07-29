@@ -1,44 +1,68 @@
 Steps to Test:
-1. kubectl apply -f empldb-secret-config.yaml
-2. kubectl apply -f empldb-pv-pvc.yaml
-3. kubectl apply -f empldb-hl-ssets.yaml
-4. kubectl apply -f emplapi-depl-ing.yaml
-5. kubectl apply -f emplapi-hpa.yaml
+kubectl apply -f empldb-secret-config.yaml && kubectl get secrets,configmap
+kubectl apply -f empldb-pv-pvc.yaml && kubectl get pv,pvc
+kubectl apply -f empldb-hl-ssets.yaml && kubectl get svc,pods
+kubectl apply -f emplapi-depl-ing.yaml && kubectl get svc,pods,ingress
+kubectl apply -f emplapi-hpa.yaml && kubectl get hpa
+kubectl get all
 
-# Check API is connection with DB
-5. Check Public Url for Ingress is working
-6. login into db and show existing records
-kubectl exec -it empldb-ssets-0 -- mysql -h empldb-ssets-0.empldb-hl -u root -p
-SHOW Datbases
-Use <DB>
-SHOW Tables 
-Use <Table>
-Select * From <Table>
-7. apply Post API and show new entry is created
-8. Show new record in DB
+Delete API Pod
+kubectl get pods -l app=employeeapi -w
+kubectl delete pod emplapi-depl-5ff4cf5f75-7hjk2
+kubectl get pods -l app=employeeapi
 
-# Test Db Deletion and Data Persistence
-9. Delete db pod
-10. Check DB Pod is regenerated
-11. Login into Db and show all records(including created in Step 7)
-12. Delete DB StatefulSets
-13. Check DB Pod is regenerated
-14. Login into Db and show all records(including created in Step 7)
+Rolling Update
+kubectl get pods -l app=employeeapi -w
+kubectl set image deployment/emplapi-depl employeeapi=atharimam/employeeapi:4.3.2
+kubectl rollout undo deployment emplapi-depl
+kubectl get pods -l app=employeeapi
 
-# Test Pod Deletion
-  Delete one deployment pod and check pod is regenerating
+Test Connection API with DB
+Show data in browser and postman
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
 
-# Test Rolling Update
-15. Watch deployment pods (kubectl get pods -l app=employeeapi --watch)
-16. Open New Console and Apply Deployment with wrong image (Kubectl apply -f emplapi-depl-test)
-17. Check deployment replica is intact and new pod is in crash/error state
-18. Apply Deployment with correct image (Kubectl apply -f emplapi-depl-ing)
+Test API is real updating DB
+POST one data using postman
+Show data in browser and postman
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
 
-# Test AutoScale and Connection Count
-22. Apply HPA (Kubectl apply -f emplapi-hpa.yaml)
-19. Watch Deployment Pods (kubectl get pods -l app=employeeapi --watch)
-20. Apply load generator (docker run --rm williamyeh/hey -n 4000 -c 200 http://35.201.101.217/api/employee)
-21. Check new pod is created
-22. Open 2nd Console AND Login into Db
-23. Run Query: SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = 'program_name' GROUP BY ATTR_VALUE;
-24. Check connection count per pod(Currently 25)
+Test DB Pod Deletion and Pod is regenerated
+Test Data Persistence after db pod is deleted
+
+kubectl get pods -l app=mysql -w
+kubectl delete pod <pod-name> && kubectl get pods -l app=mysql --watch
+kubectl get pods -l app=MySQL
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
+show in browser as well
+
+Test Data Persistence after db StatefulSets is deleted
+kubectl get pods -l app=mysql -w
+kubectl delete statefulsets empldb-ssets
+kubectl get pods -l app=mysql
+kubectl apply -f empldb-hl-ssets.yaml
+kubectl get pods -l app=mysql
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
+show in browser as well
+
+Test Auto Scale 
+Test Connection pool Count
+docker run --rm williamyeh/hey -n 1000 -c 100 http://34.49.45.153/api/employee
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = '\''program_name'\'' GROUP BY ATTR_VALUE;"'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

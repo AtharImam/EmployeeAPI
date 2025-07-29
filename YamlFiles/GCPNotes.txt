@@ -1,22 +1,28 @@
 gcloud auth login
 gcloud config set project kubernetestest-464810
-gcloud container clusters create my-cluster --zone us-central1-a --num-nodes 1 --disk-size 12 --disk-type pd-standard --machine-type e2-medium --enable-ip-alias --project kubernetestest-464810
-gcloud container clusters get-credentials autopilot-cluster-1 --region us-central1 --project kubernetestest-464810
+gcloud container clusters create my-cluster --zone us-central1-a --num-nodes 3 --disk-size 12 --disk-type pd-standard --machine-type e2-medium --enable-ip-alias --project kubernetestest-464810
+gcloud container clusters get-credentials my-cluster --zone us-central1-a --project kubernetestest-464810
+gcloud container clusters delete my-cluster --zone us-central1-a --project kubernetestest-464810
+gcloud container clusters resize my-cluster --node-pool default-pool --num-nodes 3 --zone us-central1-a --project kubernetestest-464810
 
 kubectl get pods -l app=employeeapi --watch
-kubectl set image deployment/emplapi-depl employeeapi=nginx:1.25-alpine
-kubectl rollout status deployment emplapi-depl
-kubectl exec -it empldb-ssets-0 -- mysql -h empldb-ssets-0.empldb-hl -u root -p
 kubectl get pods -l app=mysql --watch
-docker run --rm williamyeh/hey -n 4000 -c 200 http://35.201.101.217/api/employee
+kubectl get all
+
+kubectl set image deployment/emplapi-depl atharimam/employeeapi:4.3.2
+kubectl rollout status deployment emplapi-depl
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = '\''program_name'\'' GROUP BY ATTR_VALUE;"'
+docker run --rm williamyeh/hey -n 4000 -c 200 http://<publicip>/api/employee
 kubectl exec -it empldb-ssets-0 -- mysql -h empldb-ssets-0.empldb-hl -u root -p EmployeeDb
 kubectl exec -it empldb-ssets-0 -- mysql -h empldb-ssets-0.empldb-hl -u root -p EmployeeDb -e "SELECT * FROM Employees;"
-docker exec -it empldb-ssets-0 sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root -e "SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = '\''program_name'\'' GROUP BY ATTR_VALUE;"'
-docker exec -it empldb-ssets-0 sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root -e "SELECT * FROM Employees;" your_EmployeeDb'
 
+"Pooling=true;Max Pool Size=25;ConnectionIdleLifetime=180;ConnectionReset=true;"
 
 SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = 'program_name' GROUP BY ATTR_VALUE;
-
+SELECT * FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = 'program_name';
+SELECT USER, DB, COUNT(*) FROM information_schema.PROCESSLIST GROUP BY USER, DB;
+SELECT * FROM information_schema.PROCESSLIST WHERE Command != 'SLEEP';
 
 | Tool                      | Performance          | Notes                                    |
 | ------------------------- | -------------------- | ---------------------------------------- |
