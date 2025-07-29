@@ -26,6 +26,6 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ../Dockerfile
+        file: ./EmployeeAPI/Dockerfile
         push: true
         tags: atharimam/employeeapi:latest
