@@ -5,15 +5,15 @@ metadata:
   labels:
     app: employeeapi
 spec:
-  replicas: 5
+  replicas: 4
   selector:
     matchLabels:
       app: employeeapi
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
@@ -21,15 +21,17 @@ spec:
     spec:
       containers:
         - name: employeeapi
-          image: atharimam/employeeapi:latest
+          image: atharimam/employeeapi
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
           resources:
             requests:
               cpu: "100m"
+              memory: "128Mi"
             limits:
               cpu: "250m"
+              memory: "256Mi"
           env:
             - name: POD_Name
               valueFrom:
@@ -54,11 +56,11 @@ spec:
                 configMapKeyRef:
                   name: empldb-config
                   key: DB_Name
-            - name: DB_PoolSize
+            - name: DB_Pool
               valueFrom:
                 configMapKeyRef:
                   name: empldb-config
-                  key: DB_PoolSize
+                  key: DB_Pool
             - name: DB_User
               valueFrom:
                 secretKeyRef:
@@ -91,7 +93,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: emplapi-ing
+  annotations:
+    kubernetes.io/ingress.class: "gce"
 spec:
+  ingressClassName: gce
   rules:
     - http:
         paths:

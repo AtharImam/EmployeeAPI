@@ -1,6 +1,19 @@
+Yaml Files:
+1. empldb-secret-config: Secret + Configmap
+2. empldb-pv-pvc:  Persistent Volume (PV) +  Persistent Volume Claim(PVC)
+3. empldb-hl-ssets: DB Headless Service + DB Statefulsets
+4. emplapi-depl-ing: API Deployment + API ClusterIP + Ingress
+5. emplapi-hpa: Horizontal Pod Autoscaler for API
+
+Test Cases:
 # Show all components
-# Check API is connection with DB
-# Test Pod Deletion
-# Test Db Deletion and Data Persistence
-# Test Rolling Update
-# Test AutoScale and Connection Count
+# Test API Pod Deletion and Pod is regnerated
+# Test Rolling Update by setting wrong image
+# Test Rollout i.e. Deployment goes to old state after crash
+# Test API is connection with DB
+# Test API is real updating DB
+# Test DB Pod Deletion and Pod is regnerated
+# Test Data Persistence after db pod is deleted
+# Test Data Persistence after db StatefulSets is deleted
+# Test Auto Scale 
+# Test Connection pool Count
