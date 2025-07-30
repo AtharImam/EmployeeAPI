@@ -9,6 +9,9 @@ kubectl get pods -l app=employeeapi --watch
 kubectl get pods -l app=mysql --watch
 kubectl get all
 
+docker run --rm --pull always -it -p 8080:80 atharimam/employeeapi:latest
+
+
 kubectl set image deployment/emplapi-depl atharimam/employeeapi:4.3.2
 kubectl rollout status deployment emplapi-depl
 kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
