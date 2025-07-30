@@ -15,7 +15,7 @@ docker run --rm --pull always -it -p 8080:80 atharimam/employeeapi:latest
 kubectl set image deployment/emplapi-depl atharimam/employeeapi:4.3.2
 kubectl rollout status deployment emplapi-depl
 kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
-kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = '\''program_name'\'' GROUP BY ATTR_VALUE;"'
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = '\''program_name'\'' AND ATTR_VALUE!='\''mysql'\'' GROUP BY ATTR_VALUE;"'
 docker run --rm williamyeh/hey -n 4000 -c 200 http://<publicip>/api/employee
 kubectl exec -it empldb-ssets-0 -- mysql -h empldb-ssets-0.empldb-hl -u root -p EmployeeDb
 kubectl exec -it empldb-ssets-0 -- mysql -h empldb-ssets-0.empldb-hl -u root -p EmployeeDb -e "SELECT * FROM Employees;"

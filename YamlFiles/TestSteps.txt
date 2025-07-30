@@ -48,7 +48,7 @@ Test Connection pool Count
 kubectl apply -f emplapi-hpa.yaml && kubectl get hpa
 docker run --rm williamyeh/hey -n 4000 -c 200 http://34.149.23.108/api/pooltest/simulate
 docker run --rm williamyeh/hey -n 4000 -c 200 http://34.149.23.108/api/employee
-kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = '\''program_name'\'' GROUP BY ATTR_VALUE;"'
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = '\''program_name'\'' AND ATTR_VALUE!='\''mysql'\'' GROUP BY ATTR_VALUE;"'
 
 
 
