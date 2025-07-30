@@ -1,8 +1,10 @@
 Steps to Test:
 kubectl apply -f empldb-secret-config.yaml && kubectl get secrets,configmap
 kubectl apply -f empldb-pv-pvc.yaml && kubectl get pv,pvc
-kubectl apply -f empldb-hl-ssets.yaml && kubectl get svc,pods
-kubectl apply -f emplapi-depl-ing.yaml && kubectl get svc,pods,ingress
+kubectl apply -f empldb-svc-ssets.yaml && kubectl get svc
+kubectl get pods
+kubectl apply -f emplapi-depl-ing.yaml && kubectl get svc,ingress
+kubectl get pods
 kubectl get all
 
 Delete API Pod
@@ -38,16 +40,18 @@ Test Data Persistence after db StatefulSets is deleted
 kubectl get pods -l app=mysql -w
 kubectl delete statefulsets empldb-ssets
 kubectl get pods -l app=mysql
-kubectl apply -f empldb-hl-ssets.yaml
+kubectl apply -f empldb-svc-ssets.yaml
 kubectl get pods -l app=mysql
 kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
 show in browser as well
 
 Test Auto Scale 
 Test Connection pool Count
-kubectl apply -f emplapi-hpa.yaml && kubectl get hpa
-docker run --rm williamyeh/hey -n 4000 -c 200 http://34.149.23.108/api/pooltest/simulate
-docker run --rm williamyeh/hey -n 4000 -c 200 http://34.149.23.108/api/employee
+kubectl apply -f emplapi-hpa.yaml
+kubectl get hpa -w
+kubectl get pods -l app=employeeapi -w
+Note: Make sure publicip for ingress is enabled
+docker run --rm williamyeh/hey -n 4000 -c 200 http://34.49.45.153/api/employee
 kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = '\''program_name'\'' AND ATTR_VALUE!='\''mysql'\'' GROUP BY ATTR_VALUE;"'
 
 
