@@ -10,7 +10,9 @@ spec:
     - port: 3306
       name: mysql
       targetPort: 3306
+
 ---
+
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

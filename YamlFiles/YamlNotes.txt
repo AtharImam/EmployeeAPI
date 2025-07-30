@@ -1,7 +1,8 @@
 Yaml Files:
 1. empldb-secret-config: Secret + Configmap
 2. empldb-pv-pvc:  Persistent Volume (PV) +  Persistent Volume Claim(PVC)
-3. empldb-hl-ssets: DB Headless Service + DB Statefulsets
-4. emplapi-depl-ing: API Deployment + API ClusterIP + Ingress
-5. emplapi-hpa: Horizontal Pod Autoscaler for API
+3. empldb-ssets-svc: DB Headless Service + DB Statefulsets
+4. emplapi-depl-svc: API Deployment + API ClusterIP
+5. emplapi-depl-svc: API Ingress
+6. emplapi-ing: Horizontal Pod Autoscaler for API
 

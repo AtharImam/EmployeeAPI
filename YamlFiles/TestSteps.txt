@@ -1,10 +1,12 @@
 Steps to Test:
 kubectl apply -f empldb-secret-config.yaml && kubectl get secrets,configmap
 kubectl apply -f empldb-pv-pvc.yaml && kubectl get pv,pvc
-kubectl apply -f empldb-svc-ssets.yaml && kubectl get svc
+kubectl apply -f empldb-ssets-svc.yaml && kubectl get svc
 kubectl get pods
-kubectl apply -f emplapi-depl-ing.yaml && kubectl get svc,ingress
+kubectl apply -f emplapi-depl-svc.yaml && kubectl get svc
 kubectl get pods
+kubectl apply -f emplapi-ing.yaml && kubectl get ingress
+kubectl get ingress
 kubectl get all
 
 Delete API Pod
@@ -40,7 +42,7 @@ Test Data Persistence after db StatefulSets is deleted
 kubectl get pods -l app=mysql -w
 kubectl delete statefulsets empldb-ssets
 kubectl get pods -l app=mysql
-kubectl apply -f empldb-svc-ssets.yaml
+kubectl apply -f empldb-ssets-svc.yaml
 kubectl get pods -l app=mysql
 kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
 show in browser as well

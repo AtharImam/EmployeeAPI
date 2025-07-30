@@ -86,24 +86,3 @@ spec:
       port: 80
       targetPort: 8080
   type: ClusterIP
-
----
-
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: emplapi-ing
-  annotations:
-    kubernetes.io/ingress.class: "gce"
-spec:
-  ingressClassName: gce
-  rules:
-    - http:
-        paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: emplapi-svc
-                port:
-                  number: 80
