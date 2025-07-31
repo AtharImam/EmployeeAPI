@@ -1,4 +1,5 @@
 ﻿using EmployeeLibrary.Mdoels;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeLibrary.Repositories
 {
@@ -23,6 +24,14 @@ namespace EmployeeLibrary.Repositories
         /// A task that represents the asynchronous operation. The task result contains the <see cref="Employee"/> if found; otherwise, <c>null</c>.
         /// </returns>
         Task<Employee?> GetById(int id);
+
+        /// <summary>
+        /// Retrieves an employee by their unique identifier.
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the <see cref="Employee"/> if found; otherwise, <c>null</c>.
+        /// </returns>
+        Task<Employee?> GetFirstOrDefault();
 
         /// <summary>
         /// Adds a new employee to the database.

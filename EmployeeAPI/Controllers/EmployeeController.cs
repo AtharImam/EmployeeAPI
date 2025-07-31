@@ -25,6 +25,28 @@ namespace EmployeeAPI.Controllers
         }
 
         /// <summary>
+        /// Test endpoint to simulate load and verify connection pooling.
+        /// </summary>
+        /// <returns>A simple response after a delay.</returns>
+        [HttpGet("test")]
+        public async Task<IActionResult> TestConnectionPooling()
+        {
+            var podName = Environment.GetEnvironmentVariable("POD_Name") ?? "unknown-pod";
+            Console.WriteLine($"[LOG] Connection test hit from POD: {podName}");
+
+            var employee = await _repo.GetFirstOrDefault();
+
+            await Task.Delay(1500);
+
+            return Ok(new
+            {
+                Message = "Connection pooling test complete.",
+                Pod = podName,
+                Employee = employee
+            });
+        }
+
+        /// <summary>
         /// Retrieves all employees.
         /// </summary>
         /// <returns>A list of all <see cref="Employee"/> entities.</returns>
@@ -110,28 +132,6 @@ namespace EmployeeAPI.Controllers
 
             await _repo.Delete(id);
             return Ok(new { message = string.Format(Messages.EmployeeDeleted, id) });
-        }
-
-        /// <summary>
-        /// Test endpoint to simulate load and verify connection pooling.
-        /// </summary>
-        /// <returns>A simple response after a delay.</returns>
-        [HttpGet("test")]
-        public async Task<IActionResult> TestConnectionPooling()
-        {
-            var podName = Environment.GetEnvironmentVariable("POD_Name") ?? "unknown-pod";
-            Console.WriteLine($"[LOG] Connection test hit from POD: {podName}");
-
-            var employee = await _repo.GetById(1);
-
-            await Task.Delay(1500);
-
-            return Ok(new
-            {
-                Message = "Connection pooling test complete.",
-                Pod = podName,
-                Employee = employee
-            });
         }
     }
 }

@@ -40,6 +40,16 @@ namespace EmployeeLibrary.Repositories
         }
 
         /// <summary>
+        /// Retrieves an first or default employee.
+        /// </summary>
+        /// <returns>The <see cref="Employee"/> entity if found; otherwise, <c>null</c>.</returns>
+        public async Task<Employee?> GetFirstOrDefault()
+        {
+            return await _context.Employees.FirstOrDefaultAsync();
+        }
+
+
+        /// <summary>
         /// Adds a new employee to the database.
         /// </summary>
         /// <param name="employee">The <see cref="Employee"/> entity to add.</param>
