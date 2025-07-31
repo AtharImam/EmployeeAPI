@@ -1,7 +1,7 @@
-﻿using EmployeeAPI.Models;
+﻿using EmployeeLibrary.Mdoels;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmployeeAPI.Data
+namespace EmployeeLibrary.Repositories
 {
     public class AppDbContext : DbContext
     {

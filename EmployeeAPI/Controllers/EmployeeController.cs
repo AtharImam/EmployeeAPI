@@ -1,7 +1,6 @@
-﻿using EmployeeAPI.Helpers;
-using EmployeeAPI.Models;
-using EmployeeAPI.Repositories;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using EmployeeLibrary.Helpers;
+using EmployeeLibrary.Mdoels;
+using EmployeeLibrary.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeAPI.Controllers

@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "EmployeeSeeder": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "DB_Host": "localhost",
+        "DB_Port": "3306",
+        "DB_Name": "EmployeeDb",
+        "DB_User": "nagp",
+        "DB_Pass": "Asmt#5421"
+      }
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

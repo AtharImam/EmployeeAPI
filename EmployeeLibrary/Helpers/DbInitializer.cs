@@ -1,7 +1,7 @@
-﻿using EmployeeAPI.Data;
-using EmployeeAPI.Models;
+﻿using EmployeeLibrary.Mdoels;
+using EmployeeLibrary.Repositories;
 
-namespace EmployeeAPI.Helpers
+namespace EmployeeLibrary.Helpers
 {
     public static class DbInitializer
     {

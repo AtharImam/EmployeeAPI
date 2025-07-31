@@ -1,9 +1,8 @@
-﻿using EmployeeAPI.Models;
-using EmployeeAPI.Data;
+﻿using EmployeeLibrary.Helpers;
+using EmployeeLibrary.Mdoels;
 using Microsoft.EntityFrameworkCore;
-using EmployeeAPI.Helpers;
 
-namespace EmployeeAPI.Repositories
+namespace EmployeeLibrary.Repositories
 {
     /// <summary>
     /// Provides CRUD operations for <see cref="Employee"/> entities using <see cref="AppDbContext"/>.

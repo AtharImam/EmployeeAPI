@@ -5,6 +5,9 @@ kubectl apply -f empldb-secret-config.yaml && kubectl get secrets,configmap
 kubectl apply -f empldb-pv-pvc.yaml && kubectl get pv,pvc
 kubectl apply -f empldb-ssets-svc.yaml && kubectl get svc
 kubectl get pods
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
+kubectl apply -f empldb-seed-job.yaml && kubectl get jobs
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
 kubectl apply -f emplapi-depl-svc.yaml && kubectl get svc
 kubectl get pods
 kubectl apply -f emplapi-ing.yaml && kubectl get ingress

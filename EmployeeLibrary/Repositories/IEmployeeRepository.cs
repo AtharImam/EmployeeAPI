@@ -1,6 +1,6 @@
-﻿using EmployeeAPI.Models;
+﻿using EmployeeLibrary.Mdoels;
 
-namespace EmployeeAPI.Repositories
+namespace EmployeeLibrary.Repositories
 {
     /// <summary>
     /// Defines methods for managing employee data in the repository.

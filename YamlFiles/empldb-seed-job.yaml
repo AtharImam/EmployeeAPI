@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: empldb-seed-job
+  labels:
+    app: empldb-seeder
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: empldb-seeder
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: employee-seeder
+        image: atharimam/employeeseeder:latest
+        env:
+            - name: Environment
+              value: Production
+            - name: DB_Host
+              valueFrom:
+                configMapKeyRef:
+                  name: empldb-config
+                  key: DB_Host
+            - name: DB_Port
+              valueFrom:
+                configMapKeyRef:
+                  name: empldb-config
+                  key: DB_Port
+            - name: DB_Name
+              valueFrom:
+                configMapKeyRef:
+                  name: empldb-config
+                  key: DB_Name
+            - name: DB_User
+              valueFrom:
+                secretKeyRef:
+                  name: empldb-secret
+                  key: DB_User
+            - name: DB_Pass
+              valueFrom:
+                secretKeyRef:
+                  name: empldb-secret
+                  key: DB_Pass

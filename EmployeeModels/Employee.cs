@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EmployeeAPI.Models
+namespace EmployeeModels
 {
     /// <summary>
     /// Represents an employee in the system.
