@@ -57,13 +57,14 @@ kubectl apply -f emplapi-hpa.yaml && sleep 2 && kubectl get hpa
 kubectl get hpa -w
 kubectl get pods -l app=employeeapi -w
 Note: Make sure publicip for ingress is enabled
-docker run --rm williamyeh/hey -n 20000 -c 400 http://34.36.248.119/api/employee
+docker run --rm williamyeh/hey -n 10000 -c 200 http://34.36.248.119/api/employee/test
 while true; do
   kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT ATTR_VALUE, COUNT(1) Connections FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = '\''program_name'\'' AND ATTR_VALUE!='\''mysql'\'' GROUP BY ATTR_VALUE;"'
   sleep 1
 done
 
-while true; do   kubectl get hpa;   sleep 1; done
+while true; do kubectl get hpa;   sleep 1; done
+while true; do kubectl get pods -l app=employeeapi; sleep 1; done
 
 
 

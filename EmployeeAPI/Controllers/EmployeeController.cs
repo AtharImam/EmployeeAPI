@@ -25,6 +25,17 @@ namespace EmployeeAPI.Controllers
         }
 
         /// <summary>
+        /// Retrieves all employees.
+        /// </summary>
+        /// <returns>A list of all <see cref="Employee"/> entities.</returns>
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var employees = await _repo.GetAll();
+            return Ok(employees);
+        }
+
+        /// <summary>
         /// Test endpoint to simulate load and verify connection pooling.
         /// </summary>
         /// <returns>A simple response after a delay.</returns>
@@ -36,7 +47,7 @@ namespace EmployeeAPI.Controllers
 
             var employee = await _repo.GetFirstOrDefault();
 
-            await Task.Delay(1500);
+            await Task.Delay(1000);
 
             return Ok(new
             {
@@ -44,17 +55,6 @@ namespace EmployeeAPI.Controllers
                 Pod = podName,
                 Employee = employee
             });
-        }
-
-        /// <summary>
-        /// Retrieves all employees.
-        /// </summary>
-        /// <returns>A list of all <see cref="Employee"/> entities.</returns>
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var employees = await _repo.GetAll();
-            return Ok(employees);
         }
 
         /// <summary>
