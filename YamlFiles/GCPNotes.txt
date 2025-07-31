@@ -4,6 +4,8 @@ gcloud container clusters create nagp2025-advdevops --zone us-central1-a --num-n
 gcloud container clusters get-credentials nagp2025-advdevops --zone us-central1-a --project kubernetestest-464810
 gcloud container clusters delete nagp2025-advdevops --zone us-central1-a --project kubernetestest-464810
 
+desiredReplicas = currentReplicas × ( currentCPUUtilization / targetCPUUtilization )
+
 docker run --rm williamyeh/hey -n 4000 -c 200 http://<publicip>/api/employee
 SELECT * FROM performance_schema.session_connect_attrs WHERE ATTR_NAME = 'program_name';
 SELECT USER, DB, COUNT(*) FROM information_schema.PROCESSLIST GROUP BY USER, DB;
