@@ -1,7 +1,6 @@
-﻿using EmployeeLibrary.Mdoels;
-using Microsoft.EntityFrameworkCore;
+﻿using EmployeeAPI.Models;
 
-namespace EmployeeLibrary.Repositories
+namespace EmployeeAPI.Data
 {
     /// <summary>
     /// Defines methods for managing employee data in the repository.

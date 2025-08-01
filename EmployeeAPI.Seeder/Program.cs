@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using EmployeeLibrary.Repositories;
-using EmployeeLibrary.Helpers;
 using Microsoft.Extensions.Hosting;
-using EmployeeLibrary.Mdoels;
 using Microsoft.Extensions.Configuration;
+using EmployeeAPI.Models;
+using EmployeeAPI.Data;
 
 var builder = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((context, config) =>
@@ -18,7 +17,7 @@ var builder = Host.CreateDefaultBuilder(args)
     {
         var env = context.HostingEnvironment;
         var conStr = context.Configuration.GetConnectionString("DefaultConnection");
-        
+
         if (env.IsProduction())
         {
             services.Configure<DBSettings>(context.Configuration.GetSection("DBSettings"));

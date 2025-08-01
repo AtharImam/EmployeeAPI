@@ -1,4 +1,4 @@
-﻿namespace EmployeeLibrary.Mdoels
+﻿namespace EmployeeAPI.Models
 {
     /// <summary>
     /// Represents the database connection settings.

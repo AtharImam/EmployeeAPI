@@ -1,9 +1,9 @@
-﻿using EmployeeLibrary.Helpers;
-using EmployeeLibrary.Mdoels;
-using EmployeeLibrary.Repositories;
+﻿using EmployeeAPI.Common;
+using EmployeeAPI.Data;
+using EmployeeAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EmployeeAPI.Controllers
+namespace EmployeeAPI.Api.Controllers
 {
     /// <summary>
     /// API controller for managing <see cref="Employee"/> entities.

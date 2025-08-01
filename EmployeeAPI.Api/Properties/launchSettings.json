@@ -9,8 +9,8 @@
         "DB_Host": "localhost",
         "DB_Port": "3306",
         "DB_Name": "EmployeeDb",
-        "DB_User": "nagp",
-        "DB_Pass": "Asmt#5421",
+        "DB_User": "#####",
+        "DB_Pass": "#####",
         "DB_Pool": "25",
         "POD_Name": "Local_Pod"
       },

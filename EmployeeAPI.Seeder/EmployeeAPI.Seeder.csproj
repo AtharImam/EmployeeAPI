@@ -41,7 +41,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EmployeeLibrary\EmployeeLibrary.csproj" />
+    <ProjectReference Include="..\EmployeeAPI.Data\EmployeeAPI.Data.csproj" />
+    <ProjectReference Include="..\EmployeeAPI.Models\EmployeeAPI.Models.csproj" />
   </ItemGroup>
 
 </Project>

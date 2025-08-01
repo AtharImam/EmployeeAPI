@@ -5,13 +5,21 @@ kubectl apply -f empldb-secret-config.yaml && sleep 2 && kubectl get secrets,con
 kubectl apply -f empldb-pv-pvc.yaml && sleep 5 && kubectl get pv,pvc
 kubectl apply -f empldb-ssets-svc.yaml && sleep 10 && kubectl get svc
 kubectl get pods -l app=mysql
-kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
-kubectl apply -f empldb-seed-job.yaml && sleep 15 && kubectl get jobs
-kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
 kubectl apply -f emplapi-depl-svc.yaml && sleep 10 && kubectl get svc
 kubectl get pods -l app=employeeapi
 kubectl apply -f emplapi-ing.yaml && sleep 5 && kubectl get ingress
+kubectl apply -f empldb-seed-job.yaml && sleep 15 && kubectl get jobs
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
 kubectl get all
+
+Test Connection API with DB
+Show data in browser and postman
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
+
+Test API is real updating DB
+POST one data using postman
+Show data in browser and postman
+kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
 
 Delete API Pod
 kubectl get pods -l app=employeeapi -w
@@ -23,15 +31,6 @@ kubectl get pods -l app=employeeapi -w
 kubectl set image deployment/emplapi-depl employeeapi=atharimam/employeeapi:4.3.2
 kubectl rollout undo deployment emplapi-depl
 kubectl get pods -l app=employeeapi
-
-Test Connection API with DB
-Show data in browser and postman
-kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
-
-Test API is real updating DB
-POST one data using postman
-Show data in browser and postman
-kubectl exec empldb-ssets-0 -- sh -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root --table -e "SELECT * FROM Employees;" EmployeeDb'
 
 Test DB Pod Deletion and Pod is regenerated
 Test Data Persistence after db pod is deleted

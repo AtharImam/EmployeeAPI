@@ -2,18 +2,18 @@ Yaml Files:
 1. empldb-secret-config: Secret + Configmap
 2. empldb-pv-pvc:  Persistent Volume (PV) +  Persistent Volume Claim(PVC)
 3. empldb-ssets-svc: DB Statefulsets + DB Headless Service
-4. empldb-seed-job: Seeding the database
 5. emplapi-depl-svc: API Deployment + API ClusterIP
 6. emplapi-ing: API Ingress
-7. emplapi-hpa: Horizontal Pod Autoscaler for API
+7. empldb-seed-job: Seeding the database
+8. emplapi-hpa: Horizontal Pod Autoscaler for API
 
 Test Cases:
 # Show all components
+# Test API is connected with DB
+# Test API is real updating DB
 # Test API Pod Deletion and Pod is regnerated
 # Test Rolling Update by setting wrong image
 # Test Rollout i.e. Deployment goes to old state after crash
-# Test API is connected with DB
-# Test API is real updating DB
 # Test DB Pod Deletion and Pod is regnerated
 # Test Data Persistence after db pod is deleted
 # Test Data Persistence after db StatefulSets is deleted

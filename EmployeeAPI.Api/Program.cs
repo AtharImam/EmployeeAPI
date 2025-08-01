@@ -1,5 +1,5 @@
-using EmployeeLibrary.Mdoels;
-using EmployeeLibrary.Repositories;
+using EmployeeAPI.Data;
+using EmployeeAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
