@@ -30,8 +30,8 @@ jobs:
         push: true
         pull: true
         tags: |
-          atharimam/employeeapi:latest
-          atharimam/employeeapi:${{ github.sha }}
+          atharimam/employeeapi.api:latest
+          atharimam/employeeapi.api:${{ github.sha }}
 
     - name: 📦 Build and push EmployeeSeeder image
       uses: docker/build-push-action@v5
@@ -41,5 +41,5 @@ jobs:
         push: true
         pull: true
         tags: |
-          atharimam/employeeseeder:latest
-          atharimam/employeeseeder:${{ github.sha }}
+          atharimam/employeeapi.seeder:latest
+          atharimam/employeeapi.seeder:${{ github.sha }}
