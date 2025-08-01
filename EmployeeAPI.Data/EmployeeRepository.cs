@@ -1,9 +1,8 @@
-﻿using EmployeeAPI.Models;
-using EmployeeAPI.Data;
+﻿using EmployeeAPI.Common;
+using EmployeeAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using EmployeeAPI.Helpers;
 
-namespace EmployeeAPI.Repositories
+namespace EmployeeAPI.Data
 {
     /// <summary>
     /// Provides CRUD operations for <see cref="Employee"/> entities using <see cref="AppDbContext"/>.
@@ -39,6 +38,16 @@ namespace EmployeeAPI.Repositories
         {
             return await _context.Employees.FindAsync(id);
         }
+
+        /// <summary>
+        /// Retrieves an first or default employee.
+        /// </summary>
+        /// <returns>The <see cref="Employee"/> entity if found; otherwise, <c>null</c>.</returns>
+        public async Task<Employee?> GetFirstOrDefault()
+        {
+            return await _context.Employees.FirstOrDefaultAsync();
+        }
+
 
         /// <summary>
         /// Adds a new employee to the database.

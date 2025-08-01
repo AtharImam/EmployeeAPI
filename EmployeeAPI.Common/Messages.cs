@@ -1,4 +1,4 @@
-namespace EmployeeAPI.Helpers
+namespace EmployeeAPI.Common
 {
     public static class Messages
     {

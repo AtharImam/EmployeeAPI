@@ -1,10 +1,9 @@
-﻿using EmployeeAPI.Helpers;
+﻿using EmployeeAPI.Common;
+using EmployeeAPI.Data;
 using EmployeeAPI.Models;
-using EmployeeAPI.Repositories;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EmployeeAPI.Controllers
+namespace EmployeeAPI.Api.Controllers
 {
     /// <summary>
     /// API controller for managing <see cref="Employee"/> entities.
@@ -34,6 +33,28 @@ namespace EmployeeAPI.Controllers
         {
             var employees = await _repo.GetAll();
             return Ok(employees);
+        }
+
+        /// <summary>
+        /// Test endpoint to simulate load and verify connection pooling.
+        /// </summary>
+        /// <returns>A simple response after a delay.</returns>
+        [HttpGet("test")]
+        public async Task<IActionResult> TestConnectionPooling()
+        {
+            var podName = Environment.GetEnvironmentVariable("POD_Name") ?? "unknown-pod";
+            Console.WriteLine($"[LOG] Connection test hit from POD: {podName}");
+
+            var employee = await _repo.GetFirstOrDefault();
+
+            await Task.Delay(1000);
+
+            return Ok(new
+            {
+                Message = "Connection pooling test complete.",
+                Pod = podName,
+                Employee = employee
+            });
         }
 
         /// <summary>

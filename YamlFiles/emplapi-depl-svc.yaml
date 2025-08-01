@@ -12,8 +12,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: employeeapi
-          image: atharimam/employeeapi
+          image: atharimam/employeeapi:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -86,24 +86,3 @@ spec:
       port: 80
       targetPort: 8080
   type: ClusterIP
-
----
-
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: emplapi-ing
-  annotations:
-    kubernetes.io/ingress.class: "gce"
-spec:
-  ingressClassName: gce
-  rules:
-    - http:
-        paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: emplapi-svc
-                port:
-                  number: 80
