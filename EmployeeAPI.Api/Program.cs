@@ -1,3 +1,4 @@
+using EmployeeAPI.Api;
 using EmployeeAPI.Data;
 using EmployeeAPI.Models;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,10 @@ else
 }
 
 var app = builder.Build();
+
+using var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+DbInitializer.Initialize(db);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -32,6 +32,10 @@ namespace EmployeeAPI.Api.Controllers
         public async Task<IActionResult> GetAll()
         {
             var employees = await _repo.GetAll();
+            if (employees?.Any() == false)
+            {
+                return NotFound(new { message = Messages.EmployeesNotFound });
+            }
             return Ok(employees);
         }
 

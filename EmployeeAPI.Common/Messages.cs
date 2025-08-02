@@ -2,6 +2,7 @@ namespace EmployeeAPI.Common
 {
     public static class Messages
     {
+        public const string EmployeesNotFound = "No employees found.";
         public const string EmployeeNotFound = "Employee with ID {0} not found.";
         public const string EmployeeCreated = "Employee created successfully.";
         public const string EmployeeCreationFailed = "Failed to create employee.";

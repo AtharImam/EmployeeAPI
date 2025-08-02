@@ -1,7 +1,7 @@
-﻿
+﻿using EmployeeAPI.Data;
 using EmployeeAPI.Models;
 
-namespace EmployeeAPI.Data
+namespace EmployeeAPI.Seeder
 {
     public static class DbInitializer
     {
