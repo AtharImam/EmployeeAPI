@@ -15,9 +15,13 @@ spec:
       containers:
       - name: employee-seeder
         image: atharimam/employeeapi.seeder:latest
+        imagePullPolicy: Always
         env:
             - name: Environment
-              value: Production
+              valueFrom:
+                configMapKeyRef:
+                  name: empldb-config
+                  key: Environment
             - name: DB_Host
               valueFrom:
                 configMapKeyRef:

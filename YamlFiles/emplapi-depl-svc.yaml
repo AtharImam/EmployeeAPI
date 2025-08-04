@@ -40,7 +40,10 @@ spec:
             - name: ASPNETCORE_URLS
               value: "http://+:8080"
             - name: Environment
-              value: Production
+              valueFrom:
+                configMapKeyRef:
+                  name: empldb-config
+                  key: Environment
             - name: DB_Host
               valueFrom:
                 configMapKeyRef:
