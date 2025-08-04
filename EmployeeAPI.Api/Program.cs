@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHealthChecks();
+//builder.Services.AddHealthChecks();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 var conStr = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -60,6 +60,6 @@ app.MapControllers();
 
 app.MapGet("/", () => "OK");
 
-app.MapHealthChecks("/health");
+//app.MapHealthChecks("/health");
 
 app.Run();

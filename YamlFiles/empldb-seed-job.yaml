@@ -18,10 +18,7 @@ spec:
         imagePullPolicy: Always
         env:
             - name: Environment
-              valueFrom:
-                configMapKeyRef:
-                  name: empldb-config
-                  key: Environment
+              value: "Production"
             - name: DB_Host
               valueFrom:
                 configMapKeyRef:
