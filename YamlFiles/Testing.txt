@@ -1,21 +1,26 @@
 Yaml Files:
-1. empldb-secret-config: Secret + Configmap
-2. empldb-pv-pvc:  Persistent Volume (PV) +  Persistent Volume Claim(PVC)
-3. empldb-ssets-svc: DB Statefulsets + DB Headless Service
-5. emplapi-depl-svc: API Deployment + API ClusterIP
-6. emplapi-ing: API Ingress
-7. empldb-seed-job: Seeding the database
-8. emplapi-hpa: Horizontal Pod Autoscaler for API
+1. empldb-secret-config: Secret + Configmap : Pending
+2. empldb-pv-pvc:  Persistent Volume (PV) +  Persistent Volume Claim(PVC) : Pending
+3. empldb-ssets-svc: DB Stateful sets + DB Headless Service : Total Replica = 1 : Pending
+5. emplapi-depl-svc: API Deployment + API Cluster IP  : Pending
+	-> Total Replica = 4, Max Surge = 1, Max Unavailable = 0 : Pending
+6. emplapi-ing: API Ingress : Pending
+7. empldb-seed-job: Seeding the database : Pending
+8. emplapi-hpa: Horizontal Pod Auto Scaler for API : Min = 4, Max = 8 : Pending
+
+Public Ip: Pending
 
 Test Cases:
-# Show all components
-# Test API is connected with DB
-# Test API is real updating DB
-# Test API Pod Deletion and Pod is regnerated
-# Test Rolling Update by setting wrong image
-# Test Rollout i.e. Deployment goes to old state after crash
-# Test DB Pod Deletion and Pod is regnerated
-# Test Data Persistence after db pod is deleted
-# Test Data Persistence after db StatefulSets is deleted
-# Test Auto Scale 
-# Test Connection pool Count
+# Show all components : Pending
+# Test API is connected with DB : Pending
+# Test API is real updating DB : Pending
+# Test API Pod Deletion and Pod is regenerated : Pending
+# Test Rolling Update by setting wrong image : Pending, Running = ?, Error = ?
+Note: Total Replica = 4, Max Surge = 1, Max Unavailable = 0, so after setting wrong image, Running Image must be 4 and Error Image must be 1: Pending
+# Test Rollout i.e. Deployment goes to old state after crash : Pending
+# Test DB Pod Deletion and Pod is regenerated : Pending
+# Test Data Persistence after DB pod is deleted : Pending
+# Test Data Persistence after DB Stateful Sets is deleted : Pending
+# Test Auto Scale : Pending, Min = ?, Max = ?
+# Test Connection pool Count : Pending, Connection Count = ? / Pod
+

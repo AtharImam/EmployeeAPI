@@ -14,7 +14,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: employee-seeder
-        image: atharimam/employeeseeder:latest
+        image: atharimam/employeeapi.seeder:latest
         env:
             - name: Environment
               value: Production
